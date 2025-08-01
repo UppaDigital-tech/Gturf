@@ -1,0 +1,54 @@
+services:
+  # PostgreSQL Database
+  - type: pserv
+    name: galactiturf-db
+    env: docker
+    plan: free
+    databases:
+      - name: galactiturf_db
+        user: galactiturf_user
+
+  # Django Web Service
+  - type: web
+    name: galactiturf-backend
+    env: python3
+    plan: free
+    buildCommand: |
+      pip install --upgrade pip
+      pip install -r requirements.txt
+      python manage.py collectstatic --noinput
+      python manage.py migrate
+    startCommand: |
+      python manage.py migrate
+      gunicorn galactiturf_project.wsgi:application
+    envVars:
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DEBUG
+        value: false
+      - key: ALLOWED_HOSTS
+        value: galactiturf-backend.onrender.com,localhost,127.0.0.1
+      - key: DB_NAME
+        fromDatabase:
+          name: galactiturf_db
+          property: database
+      - key: DB_USER
+        fromDatabase:
+          name: galactiturf_db
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: galactiturf_db
+          property: password
+      - key: DB_HOST
+        fromDatabase:
+          name: galactiturf_db
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: galactiturf_db
+          property: port
+      - key: PAYSTACK_SECRET_KEY
+        value: # Add your Paystack secret key here
+      - key: PAYSTACK_PUBLIC_KEY
+        value: # Add your Paystack public key here
