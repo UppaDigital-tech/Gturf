@@ -219,6 +219,7 @@ DB_PORT=5432
 
 PAYSTACK_SECRET_KEY=sk_test_your_secret_key
 PAYSTACK_PUBLIC_KEY=pk_test_your_public_key
+PAYSTACK_WEBHOOK_URL=https://your-backend.onrender.com/api/payment/webhook/
 ```
 
 ### Frontend (.env)
@@ -252,10 +253,145 @@ REACT_APP_PAYSTACK_PUBLIC_KEY=pk_test_your_public_key
 ### Payment Endpoints
 - `POST /api/payment/initialize/` - Initialize payment
 - `POST /api/payment/verify/` - Verify payment
-- `POST /api/payment/webhook/` - Paystack webhook
+- `POST /api/payment/webhook/` - Paystack webhook (URL: `/api/payment/webhook/`)
 
 ### Subscription Endpoints
 - `GET /api/subscriptions/tiers/` - List subscription tiers
+
+## 💳 Payment Implementation Guide
+
+### Paystack Integration Setup
+
+#### 1. Backend Configuration
+```python
+# settings.py
+PAYSTACK_SECRET_KEY = 'sk_test_...'  # Your Paystack secret key
+PAYSTACK_PUBLIC_KEY = 'pk_test_...'  # Your Paystack public key
+PAYSTACK_WEBHOOK_URL = 'https://your-backend.onrender.com/api/payment/webhook/'
+```
+
+#### 2. Payment Flow
+
+**Step 1: Initialize Payment**
+```javascript
+// Frontend: Initialize payment
+const response = await api.post('/payment/initialize/', {
+  subscription_tier_id: 1  // Selected subscription tier
+});
+
+// Response includes:
+// - payment_url: Redirect user here
+// - reference: Payment reference
+// - transaction_id: Internal transaction ID
+```
+
+**Step 2: Redirect to Paystack**
+```javascript
+// Redirect user to Paystack payment page
+window.location.href = response.data.payment_url;
+```
+
+**Step 3: Payment Verification**
+```javascript
+// After payment, verify on your callback page
+const verifyResponse = await api.post('/payment/verify/', {
+  reference: paymentReference  // From URL parameters
+});
+
+// On success, user's coins are automatically credited
+```
+
+#### 3. Webhook Configuration
+
+**Webhook URL:** `https://your-backend.onrender.com/api/payment/webhook/`
+
+**Webhook Events Handled:**
+- `charge.success` - Successful payment processing
+- Automatic coin crediting and subscription updates
+
+**Webhook Security:**
+- HMAC SHA512 signature verification
+- Paystack secret key validation
+- Duplicate event protection
+
+#### 4. Frontend Payment Integration
+
+```typescript
+// Payment service example
+export const processSubscriptionPayment = async (tierId: number) => {
+  try {
+    // Initialize payment
+    const initResponse = await paymentAPI.initializePayment({
+      subscription_tier_id: tierId
+    });
+    
+    // Redirect to Paystack
+    window.location.href = initResponse.payment_url;
+    
+  } catch (error) {
+    console.error('Payment initialization failed:', error);
+    throw error;
+  }
+};
+
+// Verification after payment
+export const verifyPayment = async (reference: string) => {
+  try {
+    const response = await paymentAPI.verifyPayment({ reference });
+    return response;
+  } catch (error) {
+    console.error('Payment verification failed:', error);
+    throw error;
+  }
+};
+```
+
+#### 5. Paystack Dashboard Configuration
+
+1. **Set Webhook URL:** 
+   - Go to Paystack Dashboard → Settings → Webhooks
+   - Add: `https://your-backend.onrender.com/api/payment/webhook/`
+
+2. **Test Mode:**
+   - Use test keys during development
+   - Test cards: 4084084084084081 (successful)
+
+3. **Live Mode:**
+   - Switch to live keys for production
+   - Ensure PCI compliance
+   - Monitor transactions regularly
+
+#### 6. Error Handling
+
+```python
+# Backend: Comprehensive error handling
+class PaystackService:
+    def verify_payment(self, reference):
+        try:
+            # API call to Paystack
+            response = requests.get(f"{self.base_url}/transaction/verify/{reference}")
+            
+            if response.status_code == 200:
+                # Process successful payment
+                self.credit_user_coins(transaction)
+            else:
+                # Handle payment failure
+                self.mark_transaction_failed(transaction)
+                
+        except requests.RequestException as e:
+            # Handle network errors
+            logger.error(f"Paystack API error: {e}")
+            raise PaymentProcessingError("Payment verification failed")
+```
+
+### Security Considerations
+
+1. **Never expose secret keys** in frontend code
+2. **Always verify payments** on the backend
+3. **Validate webhook signatures** to prevent tampering
+4. **Log all transactions** for audit purposes
+5. **Implement rate limiting** on payment endpoints
+6. **Use HTTPS** for all payment-related communications
 
 ## 🧪 Testing
 

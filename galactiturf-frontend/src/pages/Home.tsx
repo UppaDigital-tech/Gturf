@@ -218,6 +218,79 @@ export default function Home() {
         </Container>
       </Box>
 
+      {/* Community Section */}
+      <Box bg={'gray.100'}>
+        <Container maxW={'7xl'} py={16}>
+          <VStack spacing={8}>
+            <VStack spacing={4} textAlign={'center'}>
+              <Heading fontSize={'3xl'}>
+                Join Our Community
+              </Heading>
+              <Text fontSize={'lg'} color={'gray.600'} maxW={'3xl'}>
+                Connect with fellow football enthusiasts, watch game highlights, get tips, and stay updated 
+                with the latest news from the Galactiturf community.
+              </Text>
+            </VStack>
+            
+            <SimpleGrid columns={{ base: 1, md: 2 }} spacing={8} w={'full'} maxW={'4xl'}>
+              <VStack 
+                spacing={4} 
+                p={8} 
+                bg={'white'} 
+                rounded={'lg'} 
+                boxShadow={'md'}
+                textAlign={'center'}
+              >
+                <Text fontSize={'4xl'}>📺</Text>
+                <Heading fontSize={'xl'}>YouTube Channel</Heading>
+                <Text color={'gray.600'}>
+                  Watch game highlights, player tutorials, venue tours, and behind-the-scenes content 
+                  from the Galactiturf community.
+                </Text>
+                <Button
+                  as={'a'}
+                  href="https://youtube.com/@galactiturf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  colorScheme="red"
+                  size="lg"
+                  leftIcon={<Text>📺</Text>}
+                >
+                  Subscribe to YouTube
+                </Button>
+              </VStack>
+              
+              <VStack 
+                spacing={4} 
+                p={8} 
+                bg={'white'} 
+                rounded={'lg'} 
+                boxShadow={'md'}
+                textAlign={'center'}
+              >
+                <Text fontSize={'4xl'}>💬</Text>
+                <Heading fontSize={'xl'}>WhatsApp Community</Heading>
+                <Text color={'gray.600'}>
+                  Join our active WhatsApp group to find teammates, discuss games, get real-time updates, 
+                  and connect with players in your area.
+                </Text>
+                <Button
+                  as={'a'}
+                  href="https://chat.whatsapp.com/galactiturf-community"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  colorScheme="green"
+                  size="lg"
+                  leftIcon={<Text>💬</Text>}
+                >
+                  Join WhatsApp Group
+                </Button>
+              </VStack>
+            </SimpleGrid>
+          </VStack>
+        </Container>
+      </Box>
+
       {/* CTA Section */}
       <Box bg={'teal.500'}>
         <Container maxW={'7xl'} py={16}>

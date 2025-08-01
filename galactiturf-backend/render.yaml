@@ -52,3 +52,5 @@ services:
         value: # Add your Paystack secret key here
       - key: PAYSTACK_PUBLIC_KEY
         value: # Add your Paystack public key here
+      - key: PAYSTACK_WEBHOOK_URL
+        value: https://galactiturf-backend.onrender.com/api/payment/webhook/

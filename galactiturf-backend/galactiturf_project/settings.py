@@ -169,6 +169,7 @@ CORS_ALLOW_CREDENTIALS = True
 # Paystack configuration
 PAYSTACK_SECRET_KEY = config('PAYSTACK_SECRET_KEY', default='')
 PAYSTACK_PUBLIC_KEY = config('PAYSTACK_PUBLIC_KEY', default='')
+PAYSTACK_WEBHOOK_URL = config('PAYSTACK_WEBHOOK_URL', default='')
 
 # Custom user model (optional - for future extension)
 # AUTH_USER_MODEL = 'core.User'

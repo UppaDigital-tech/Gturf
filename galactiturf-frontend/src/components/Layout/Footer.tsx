@@ -6,6 +6,7 @@ import {
   Link,
   HStack,
 } from '@chakra-ui/react';
+import { Link as RouterLink } from 'react-router-dom';
 
 export default function Footer() {
   return (
@@ -26,16 +27,16 @@ export default function Footer() {
           © 2024 Galactiturf. All rights reserved. Built with ❤️ for football lovers.
         </Text>
         <HStack spacing={6}>
-          <Link href="/about" fontSize="sm">
+          <Link as={RouterLink} to="/about" fontSize="sm">
             About
           </Link>
-          <Link href="/contact" fontSize="sm">
+          <Link as={RouterLink} to="/contact" fontSize="sm">
             Contact
           </Link>
-          <Link href="/terms" fontSize="sm">
+          <Link as={RouterLink} to="/terms" fontSize="sm">
             Terms
           </Link>
-          <Link href="/privacy" fontSize="sm">
+          <Link as={RouterLink} to="/privacy" fontSize="sm">
             Privacy
           </Link>
         </HStack>
