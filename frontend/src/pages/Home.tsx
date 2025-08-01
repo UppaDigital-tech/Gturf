@@ -10,9 +10,13 @@ import {
   useColorModeValue,
   VStack,
   Flex,
+  Card,
+  CardBody,
+  Icon,
 } from '@chakra-ui/react';
 import { Link as RouterLink } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import { FaYoutube, FaWhatsapp } from 'react-icons/fa';
 
 const Home: React.FC = () => {
   const { user } = useAuth();
@@ -137,6 +141,75 @@ const Home: React.FC = () => {
               </VStack>
             ))}
           </SimpleGrid>
+        </Container>
+      </Box>
+
+      {/* Community Section */}
+      <Box py={20}>
+        <Container maxW={'7xl'}>
+          <VStack spacing={12}>
+            <VStack spacing={4} textAlign="center">
+              <Heading size="lg">Join Our Community</Heading>
+              <Text color="gray.600" fontSize="lg" maxW="2xl">
+                Connect with fellow football enthusiasts, get updates on new games, 
+                and be part of our growing community.
+              </Text>
+            </VStack>
+
+            <SimpleGrid columns={{ base: 1, md: 2 }} spacing={8} w="full">
+              <Card>
+                <CardBody>
+                  <VStack spacing={6} textAlign="center">
+                    <Icon as={FaYoutube} boxSize={12} color="red.500" />
+                    <VStack spacing={4}>
+                      <Heading size="md">YouTube Channel</Heading>
+                      <Text color="gray.600">
+                        Watch game highlights, tutorials, and behind-the-scenes content. 
+                        Subscribe to stay updated with the latest from Galactiturf.
+                      </Text>
+                      <Button
+                        as="a"
+                        href="https://youtube.com/@galactiturf"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        leftIcon={<FaYoutube />}
+                        colorScheme="red"
+                        size="lg"
+                      >
+                        Subscribe to Channel
+                      </Button>
+                    </VStack>
+                  </VStack>
+                </CardBody>
+              </Card>
+
+              <Card>
+                <CardBody>
+                  <VStack spacing={6} textAlign="center">
+                    <Icon as={FaWhatsapp} boxSize={12} color="green.500" />
+                    <VStack spacing={4}>
+                      <Heading size="md">WhatsApp Community</Heading>
+                      <Text color="gray.600">
+                        Join our WhatsApp community to get instant updates, 
+                        find players for games, and connect with the community.
+                      </Text>
+                      <Button
+                        as="a"
+                        href="https://wa.me/234XXXXXXXXX"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        leftIcon={<FaWhatsapp />}
+                        colorScheme="green"
+                        size="lg"
+                      >
+                        Join Community
+                      </Button>
+                    </VStack>
+                  </VStack>
+                </CardBody>
+              </Card>
+            </SimpleGrid>
+          </VStack>
         </Container>
       </Box>
 

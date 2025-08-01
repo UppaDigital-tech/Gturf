@@ -7,8 +7,10 @@ A complete web application for booking football games using a coin-based subscri
 - **User Authentication**: Secure login and registration system
 - **Subscription Management**: Multiple tiers with coin rewards
 - **Game Booking**: Book football games using earned coins
-- **Payment Integration**: Paystack payment gateway
+- **Payment Integration**: Paystack payment gateway with webhook processing
 - **Admin Interface**: Manage games and subscriptions
+- **Marketing Pages**: About and Contact pages with community links
+- **Community Integration**: YouTube channel and WhatsApp community links
 - **Responsive Design**: Modern UI with Chakra UI
 
 ## Tech Stack
@@ -120,14 +122,28 @@ galactiturf/
 
 ## API Endpoints
 
+### Authentication
 - `POST /api/auth/register/` - User registration
 - `POST /api/auth/login/` - User login
 - `GET /api/auth/profile/` - User profile
+- `GET /api/auth/dashboard/` - User dashboard
+
+### Games & Bookings
 - `GET /api/games/` - List all games
-- `POST /api/games/{id}/book/` - Book a game
-- `GET /api/subscriptions/` - List subscription tiers
+- `GET /api/games/{id}/` - Game details
+- `POST /api/games/bookings/create/` - Book a game
+- `GET /api/games/bookings/` - User's bookings
+- `POST /api/games/bookings/{id}/cancel/` - Cancel booking
+
+### Subscriptions
+- `GET /api/subscriptions/tiers/` - List subscription tiers
 - `POST /api/subscriptions/purchase/` - Purchase subscription
-- `GET /api/bookings/` - User's bookings
+- `GET /api/subscriptions/history/` - Subscription history
+
+### Payments
+- `POST /api/payments/initialize/` - Initialize payment with Paystack
+- `GET /api/payments/verify/{reference}/` - Verify payment status
+- `POST /api/payments/webhook/` - Paystack webhook endpoint
 
 ## Environment Variables
 
@@ -146,6 +162,16 @@ CORS_ALLOWED_ORIGINS=http://localhost:3000,https://your-frontend-domain.vercel.a
 REACT_APP_API_URL=http://localhost:8000
 REACT_APP_PAYSTACK_PUBLIC_KEY=your-paystack-public-key
 ```
+
+## Community Links
+
+- **YouTube Channel**: [@galactiturf](https://youtube.com/@galactiturf) - Game highlights, tutorials, and updates
+- **WhatsApp Community**: [Join our community](https://wa.me/234XXXXXXXXX) - Instant updates and player connections
+
+## Documentation
+
+- [Deployment Guide](DEPLOYMENT_GUIDE.md) - Complete deployment instructions
+- [Paystack Integration Guide](PAYSTACK_INTEGRATION.md) - Detailed payment setup guide
 
 ## Contributing
 

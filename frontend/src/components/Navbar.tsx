@@ -101,6 +101,32 @@ const Navbar: React.FC = () => {
                 >
                   Subscriptions
                 </Box>
+                <Box
+                  as={RouterLink}
+                  to="/about"
+                  px={2}
+                  py={1}
+                  rounded={'md'}
+                  _hover={{
+                    textDecoration: 'none',
+                    bg: useColorModeValue('gray.200', 'gray.700'),
+                  }}
+                >
+                  About
+                </Box>
+                <Box
+                  as={RouterLink}
+                  to="/contact"
+                  px={2}
+                  py={1}
+                  rounded={'md'}
+                  _hover={{
+                    textDecoration: 'none',
+                    bg: useColorModeValue('gray.200', 'gray.700'),
+                  }}
+                >
+                  Contact
+                </Box>
               </Stack>
             </Flex>
           </Flex>

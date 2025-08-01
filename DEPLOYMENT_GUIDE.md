@@ -32,6 +32,7 @@ ALLOWED_HOSTS=your-app-name.onrender.com
 CORS_ALLOWED_ORIGINS=https://your-frontend-domain.vercel.app
 PAYSTACK_SECRET_KEY=your-paystack-secret-key
 PAYSTACK_PUBLIC_KEY=your-paystack-public-key
+FRONTEND_URL=https://your-frontend-domain.vercel.app
 ```
 
 ### 4. Database Setup
@@ -74,6 +75,27 @@ REACT_APP_PAYSTACK_PUBLIC_KEY=your-paystack-public-key
 ### 2. Configure Keys
 - Add the keys to your environment variables
 - Test the integration in sandbox mode first
+
+### 3. Webhook Configuration
+1. In your Paystack dashboard, go to **Settings** → **Webhooks**
+2. Add a new webhook with the following details:
+   - **URL**: `https://your-backend-app.onrender.com/api/payments/webhook/`
+   - **Events to send**: Select all events (charge.success, charge.failed, transfer.success, transfer.failed)
+3. Copy the webhook secret and add it to your environment variables
+4. The webhook will automatically process payments and award coins to users
+
+### 4. Payment Flow
+1. **Initialize Payment**: User selects subscription tier
+2. **Paystack Redirect**: User is redirected to Paystack payment page
+3. **Payment Processing**: User completes payment on Paystack
+4. **Webhook Notification**: Paystack sends webhook to your backend
+5. **Coin Award**: Backend processes payment and awards coins to user
+6. **Success Redirect**: User is redirected back to your frontend
+
+### 5. Testing Payments
+- Use Paystack's test cards for development
+- Test webhook locally using ngrok or similar service
+- Verify payment processing in Django admin
 
 ## Local Development Setup
 
@@ -135,6 +157,11 @@ The application comes with sample data:
 ### Subscriptions
 - `GET /api/subscriptions/tiers/` - List subscription tiers
 - `POST /api/subscriptions/purchase/` - Purchase subscription
+
+### Payments
+- `POST /api/payments/initialize/` - Initialize payment with Paystack
+- `GET /api/payments/verify/{reference}/` - Verify payment status
+- `POST /api/payments/webhook/` - Paystack webhook endpoint (for payment processing)
 
 ## Troubleshooting
 

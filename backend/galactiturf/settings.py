@@ -187,5 +187,8 @@ CORS_ALLOW_CREDENTIALS = True
 PAYSTACK_SECRET_KEY = config('PAYSTACK_SECRET_KEY', default='')
 PAYSTACK_PUBLIC_KEY = config('PAYSTACK_PUBLIC_KEY', default='')
 
+# Frontend URL for payment callbacks
+FRONTEND_URL = config('FRONTEND_URL', default='http://localhost:3000')
+
 # Email settings (for development)
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

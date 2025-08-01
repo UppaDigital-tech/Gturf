@@ -25,6 +25,7 @@ urlpatterns = [
     path('api/auth/', include('accounts.urls')),
     path('api/games/', include('games.urls')),
     path('api/subscriptions/', include('subscriptions.urls')),
+    path('api/payments/', include('payments.urls')),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 ]
 

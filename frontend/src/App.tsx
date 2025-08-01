@@ -20,6 +20,8 @@ import GameDetail from './pages/GameDetail';
 import Subscriptions from './pages/Subscriptions';
 import Profile from './pages/Profile';
 import Bookings from './pages/Bookings';
+import About from './pages/About';
+import Contact from './pages/Contact';
 import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
@@ -39,6 +41,8 @@ function App() {
                     <Route path="/games" element={<Games />} />
                     <Route path="/games/:id" element={<GameDetail />} />
                     <Route path="/subscriptions" element={<Subscriptions />} />
+                    <Route path="/about" element={<About />} />
+                    <Route path="/contact" element={<Contact />} />
                     <Route
                       path="/dashboard"
                       element={
