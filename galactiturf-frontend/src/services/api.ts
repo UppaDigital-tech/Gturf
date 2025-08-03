@@ -129,7 +129,7 @@ export const utilityAPI = {
   },
 };
 
-export default {
+const apiServices = {
   auth: authAPI,
   user: userAPI,
   subscription: subscriptionAPI,
@@ -138,3 +138,5 @@ export default {
   payment: paymentAPI,
   utility: utilityAPI,
 };
+
+export default apiServices;

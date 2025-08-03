@@ -13,6 +13,7 @@ from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 from django.views.decorators.http import require_http_methods
+from django.utils import timezone
 import json
 
 from .models import SubscriptionTier, UserProfile, Game, Booking, Transaction
@@ -319,8 +320,43 @@ class DashboardStatsView(APIView):
 @api_view(['GET'])
 @permission_classes([permissions.AllowAny])
 def health_check(request):
-    """Health check endpoint"""
-    return Response({'status': 'healthy', 'message': 'Galactiturf API is running'})
+    """Comprehensive health check endpoint"""
+    from django.db import connection
+    from django.conf import settings
+    import sys
+    
+    health_status = {
+        'status': 'healthy',
+        'message': 'Galactiturf API is running',
+        'timestamp': timezone.now().isoformat(),
+        'version': '1.0.0',
+        'environment': 'production' if not settings.DEBUG else 'development',
+        'python_version': sys.version.split()[0],
+        'django_version': settings.VERSION if hasattr(settings, 'VERSION') else 'Unknown'
+    }
+    
+    # Database connectivity check
+    try:
+        with connection.cursor() as cursor:
+            cursor.execute("SELECT 1")
+        health_status['database'] = 'connected'
+    except Exception as e:
+        health_status['database'] = f'error: {str(e)}'
+        health_status['status'] = 'unhealthy'
+    
+    # Check critical models
+    try:
+        from .models import SubscriptionTier, Game
+        health_status['models'] = {
+            'subscription_tiers': SubscriptionTier.objects.count(),
+            'active_games': Game.objects.filter(is_active=True).count()
+        }
+    except Exception as e:
+        health_status['models'] = f'error: {str(e)}'
+        health_status['status'] = 'unhealthy'
+    
+    status_code = 200 if health_status['status'] == 'healthy' else 503
+    return Response(health_status, status=status_code)
 
 
 @api_view(['GET'])

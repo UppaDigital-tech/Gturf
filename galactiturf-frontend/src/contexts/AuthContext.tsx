@@ -46,7 +46,11 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
           } catch (error) {
             console.error('Failed to fetch profile:', error);
             // If profile fetch fails, clear auth state
-            await logout();
+            setUser(null);
+            setProfile(null);
+            setToken(null);
+            localStorage.removeItem('authToken');
+            localStorage.removeItem('user');
           }
         }
       } catch (error) {

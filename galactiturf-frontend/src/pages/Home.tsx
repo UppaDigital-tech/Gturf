@@ -5,7 +5,6 @@ import {
   Text,
   Button,
   VStack,
-  HStack,
   Container,
   SimpleGrid,
   Stack,

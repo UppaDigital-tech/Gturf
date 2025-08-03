@@ -35,7 +35,7 @@ const ContactInfo = ({ icon, title, info }: { icon: string; title: string; info:
 
 export default function Contact() {
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const { register, handleSubmit, reset, formState: { errors, isSubmitting } } = useForm<ContactFormData>();
+  const { register, handleSubmit, reset, formState: { isSubmitting } } = useForm<ContactFormData>();
 
   const onSubmit = async (data: ContactFormData) => {
     // Here you would typically send the form data to your backend

@@ -5,7 +5,6 @@ import {
   Heading,
   Text,
   VStack,
-  OrderedList,
   ListItem,
   UnorderedList,
 } from '@chakra-ui/react';
