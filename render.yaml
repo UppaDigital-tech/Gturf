@@ -8,7 +8,7 @@ services:
     startCommand: gunicorn galactiturf.wsgi:application --settings=galactiturf.settings_production
     envVars:
       - key: PYTHON_VERSION
-        value: 3.13.3
+        value: 3.11.9
       - key: SECRET_KEY
         generateValue: true
       - key: DEBUG
