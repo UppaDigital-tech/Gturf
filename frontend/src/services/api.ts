@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { withWakeUp } from '../utils/wakeUpBackend';
 
 const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:8000';
 
@@ -58,31 +59,31 @@ api.interceptors.response.use(
 
 // Auth API
 export const authAPI = {
-  register: (data: any) => api.post('/auth/register/', data),
-  login: (data: any) => api.post('/auth/login/', data),
-  getProfile: () => api.get('/auth/profile/'),
-  updateProfile: (data: any) => api.patch('/auth/update/', data),
-  getDashboard: () => api.get('/auth/dashboard/'),
+  register: withWakeUp((data: any) => api.post('/auth/register/', data)),
+  login: withWakeUp((data: any) => api.post('/auth/login/', data)),
+  getProfile: withWakeUp(() => api.get('/auth/profile/')),
+  updateProfile: withWakeUp((data: any) => api.patch('/auth/update/', data)),
+  getDashboard: withWakeUp(() => api.get('/auth/dashboard/')),
 };
 
 // Games API
 export const gamesAPI = {
-  getGames: (params?: any) => api.get('/games/', { params }),
-  getGame: (id: number) => api.get(`/games/${id}/`),
-  createGame: (data: any) => api.post('/games/create/', data),
-  getBookings: () => api.get('/games/bookings/'),
-  createBooking: (data: any) => api.post('/games/bookings/create/', data),
-  getBooking: (id: number) => api.get(`/games/bookings/${id}/`),
-  cancelBooking: (id: number) => api.post(`/games/bookings/${id}/cancel/`),
-  getBookingsSummary: () => api.get('/games/bookings/summary/'),
+  getGames: withWakeUp((params?: any) => api.get('/games/', { params })),
+  getGame: withWakeUp((id: number) => api.get(`/games/${id}/`)),
+  createGame: withWakeUp((data: any) => api.post('/games/create/', data)),
+  getBookings: withWakeUp(() => api.get('/games/bookings/')),
+  createBooking: withWakeUp((data: any) => api.post('/games/bookings/create/', data)),
+  getBooking: withWakeUp((id: number) => api.get(`/games/bookings/${id}/`)),
+  cancelBooking: withWakeUp((id: number) => api.post(`/games/bookings/${id}/cancel/`)),
+  getBookingsSummary: withWakeUp(() => api.get('/games/bookings/summary/')),
 };
 
 // Subscriptions API
 export const subscriptionsAPI = {
-  getTiers: () => api.get('/subscriptions/tiers/'),
-  getTier: (id: number) => api.get(`/subscriptions/tiers/${id}/`),
-  purchaseSubscription: (data: any) => api.post('/subscriptions/purchase/', data),
-  getHistory: () => api.get('/subscriptions/history/'),
+  getTiers: withWakeUp(() => api.get('/subscriptions/tiers/')),
+  getTier: withWakeUp((id: number) => api.get(`/subscriptions/tiers/${id}/`)),
+  purchaseSubscription: withWakeUp((data: any) => api.post('/subscriptions/purchase/', data)),
+  getHistory: withWakeUp(() => api.get('/subscriptions/history/')),
 };
 
 export default api;
