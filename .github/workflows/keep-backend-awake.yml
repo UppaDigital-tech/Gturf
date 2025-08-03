@@ -1,0 +1,176 @@
+name: Keep Backend Awake
+
+# Keep the Render backend awake during active hours
+# Runs every 14 minutes from 6 AM to 11 PM UTC (to avoid sleeping)
+
+on:
+  schedule:
+    # Run every 14 minutes during active hours (6 AM - 11 PM UTC)
+    # This covers most global business hours
+    - cron: '*/14 6-23 * * *'
+    
+  # Allow manual triggering
+  workflow_dispatch:
+    inputs:
+      force_wakeup:
+        description: 'Force wake-up even if backend appears awake'
+        required: false
+        default: 'false'
+        type: boolean
+
+jobs:
+  keep-awake:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        
+    - name: Wake up backend
+      env:
+        BACKEND_URL: ${{ vars.BACKEND_URL || 'https://galactiturf-backend.onrender.com' }}
+        FORCE_WAKEUP: ${{ inputs.force_wakeup || 'false' }}
+      run: |
+        echo "🔄 Starting backend wake-up process..."
+        echo "🎯 Target URL: $BACKEND_URL"
+        echo "⚡ Force wake-up: $FORCE_WAKEUP"
+        echo ""
+        
+        # Function to ping backend
+        ping_backend() {
+          local url="$1/api/health/"
+          local timeout=${2:-30}
+          
+          echo "📡 Pinging: $url"
+          
+          response=$(curl -s -w "\n%{http_code}\n%{time_total}" \
+            --max-time $timeout \
+            --retry 3 \
+            --retry-delay 5 \
+            -H "Cache-Control: no-cache" \
+            -H "Pragma: no-cache" \
+            "$url" 2>/dev/null)
+          
+          # Extract response body, status code, and time
+          body=$(echo "$response" | head -n -2)
+          status=$(echo "$response" | tail -n 2 | head -n 1)
+          time=$(echo "$response" | tail -n 1)
+          
+          echo "📊 Status: $status"
+          echo "⏱️  Time: ${time}s"
+          
+          if [ "$status" = "200" ]; then
+            echo "✅ Backend is responding!"
+            echo "🏥 Health data: $body"
+            return 0
+          else
+            echo "❌ Backend not responding (Status: $status)"
+            return 1
+          fi
+        }
+        
+        # Function to check if backend is sleeping
+        is_sleeping() {
+          local url="$1"
+          echo "🔍 Checking if backend is sleeping..."
+          
+          # Quick check with short timeout
+          response=$(curl -s -w "%{http_code}\n%{time_total}" \
+            --max-time 5 \
+            "$url/api/health/" 2>/dev/null)
+          
+          status=$(echo "$response" | tail -n 2 | head -n 1)
+          time=$(echo "$response" | tail -n 1)
+          
+          # Consider sleeping if request fails, takes >3s, or returns server errors
+          if [ "$status" != "200" ] || [ "$(echo "$time > 3" | bc -l 2>/dev/null)" = "1" ]; then
+            echo "😴 Backend appears to be sleeping (Status: $status, Time: ${time}s)"
+            return 0
+          else
+            echo "👁️  Backend appears to be awake (Status: $status, Time: ${time}s)"
+            return 1
+          fi
+        }
+        
+        # Function to wake up with retries
+        wake_up_with_retries() {
+          local url="$1"
+          local max_attempts=3
+          
+          for attempt in $(seq 1 $max_attempts); do
+            echo ""
+            echo "🚀 Wake-up attempt $attempt/$max_attempts"
+            
+            if ping_backend "$url" 45; then
+              echo "✅ Backend awakened successfully on attempt $attempt!"
+              return 0
+            else
+              echo "❌ Attempt $attempt failed"
+              
+              if [ $attempt -lt $max_attempts ]; then
+                delay=$((2 ** (attempt - 1)))
+                echo "⏳ Waiting ${delay}s before retry..."
+                sleep $delay
+              fi
+            fi
+          done
+          
+          echo "💥 Failed to wake up backend after $max_attempts attempts"
+          return 1
+        }
+        
+        # Main logic
+        echo "🧠 Smart wake-up process starting..."
+        
+        if [ "$FORCE_WAKEUP" = "true" ]; then
+          echo "⚡ Force wake-up enabled, skipping sleep check"
+          wake_up_with_retries "$BACKEND_URL"
+        else
+          if is_sleeping "$BACKEND_URL"; then
+            echo "🔄 Backend is sleeping, initiating wake-up..."
+            wake_up_with_retries "$BACKEND_URL"
+          else
+            echo "✅ Backend is already awake, no action needed"
+            
+            # Still ping once to be sure
+            ping_backend "$BACKEND_URL" 10
+          fi
+        fi
+        
+        echo ""
+        echo "🏁 Wake-up process completed at $(date)"
+        
+    - name: Report status
+      if: always()
+      run: |
+        if [ $? -eq 0 ]; then
+          echo "✅ Backend keep-alive successful"
+          echo "status=success" >> $GITHUB_OUTPUT
+        else
+          echo "❌ Backend keep-alive failed"
+          echo "status=failed" >> $GITHUB_OUTPUT
+        fi
+        
+    # Optional: Send notification on failure
+    - name: Notify on failure
+      if: failure()
+      run: |
+        echo "🚨 Backend wake-up failed!"
+        echo "This might indicate an issue with the backend server."
+        echo "Please check the Render dashboard and logs."
+        
+        # You can add webhook notifications here if needed
+        # curl -X POST your-webhook-url -d "Backend wake-up failed"
+
+    # Optional: Create an issue on repeated failures
+    - name: Check for repeated failures
+      if: failure()
+      run: |
+        echo "📊 Checking for repeated failures..."
+        # This could be enhanced to track failure patterns
+        # and create GitHub issues for investigation

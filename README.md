@@ -8,6 +8,19 @@ A complete web application for booking football games, managing subscriptions, a
 - **Frontend**: React with TypeScript and Chakra UI
 - **Payments**: Paystack integration
 - **Deployment**: Backend on Render, Frontend on Vercel
+- **Sleep Management**: Comprehensive wake-up system for free hosting
+
+### 🛌 Render Sleep Management
+
+Free hosting services like Render put applications to sleep after 15 minutes of inactivity. Our solution:
+
+- **Automatic Detection**: Smart algorithms detect when backend is sleeping
+- **Seamless Wake-up**: Transparent wake-up process with user feedback
+- **GitHub Actions**: Automated keep-alive during business hours (6 AM - 11 PM UTC)
+- **Error Recovery**: Intelligent retry logic with exponential backoff
+- **User Experience**: Progress indicators and manual wake-up options
+
+For detailed information, see: [`RENDER_WAKEUP_GUIDE.md`](./RENDER_WAKEUP_GUIDE.md)
 
 ## 🚀 Features
 
@@ -17,6 +30,7 @@ A complete web application for booking football games, managing subscriptions, a
 - **Game Booking**: Browse and book football games using coins
 - **Payment Integration**: Paystack payment gateway for subscriptions
 - **Dashboard**: User dashboard with statistics and recent activity
+- **Sleep Management**: Intelligent backend wake-up system for free hosting
 
 ### User Management
 - User profiles with coin balance tracking

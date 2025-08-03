@@ -69,6 +69,15 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const login = async (data: LoginData) => {
     try {
       setIsLoading(true);
+      
+      // Wake up backend if needed before login attempt
+      try {
+        const { wakeUpService } = await import('../services/wakeupService');
+        await wakeUpService.smartWakeUp();
+      } catch (wakeUpError) {
+        console.warn('Wake-up check failed, proceeding with login:', wakeUpError);
+      }
+      
       const response = await authAPI.login(data);
       
       // Store auth data
