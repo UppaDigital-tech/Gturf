@@ -9,6 +9,7 @@ import theme from './theme';
 // Components
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import BackendStatus from './components/BackendStatus';
 
 // Pages
 import Home from './pages/Home';
@@ -67,11 +68,12 @@ function App() {
                         </ProtectedRoute>
                       }
                     />
-                  </Routes>
-                </Box>
-                <Footer />
-              </Box>
-            </Router>
+                                         </Routes>
+                     </Box>
+                     <Footer />
+                     <BackendStatus />
+                   </Box>
+                 </Router>
           </SubscriptionProvider>
         </GameProvider>
       </AuthProvider>
