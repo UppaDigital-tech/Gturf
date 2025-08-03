@@ -22,6 +22,4 @@ services:
       - key: PAYSTACK_PUBLIC_KEY
         sync: false
       - key: DATABASE_URL
-        fromDatabase:
-          name: galactiturf-db
-          property: connectionString
+        value: postgresql://postgres.kdzakhdgdbhxijxugywa:[HnQ6v5ozHuyTY5WQ]@aws-0-eu-west-2.pooler.supabase.com:6543/postgres
