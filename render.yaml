@@ -6,7 +6,7 @@ services:
     rootDir: backend/
     buildCommand: pip install -r requirements.txt
     startCommand: gunicorn galactiturf.wsgi:application
-    releaseCommand: python manage.py migrate
+    releaseCommand: python manage.py createsuperuser --noinput --username admin --email admin@gturf.com --password TurfAdmin
     envVars:
       - key: PYTHON_VERSION
         value: 3.11.9
