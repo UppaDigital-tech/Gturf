@@ -3,6 +3,7 @@ services:
     name: galactiturf-backend
     env: python
     plan: free
+    rootDir: backend/
     buildCommand: pip install -r requirements.txt
                startCommand: gunicorn galactiturf.wsgi:application --settings=galactiturf.settings_production
     envVars:
