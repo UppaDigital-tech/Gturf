@@ -1,14 +1,14 @@
 import React from 'react';
-import { Box, Container, Stack, Text, useColorModeValue } from '@chakra-ui/react';
+import { Box, Container, Stack, Text } from '@chakra-ui/react';
 
 const Footer: React.FC = () => {
   return (
     <Box
-      bg={useColorModeValue('gray.50', 'gray.900')}
-      color={useColorModeValue('gray.700', 'gray.200')}
+      bg="gray.50"
+      color="gray.700"
       borderTop={1}
       borderStyle={'solid'}
-      borderColor={useColorModeValue('gray.200', 'gray.700')}
+      borderColor="gray.200"
     >
       <Container
         as={Stack}

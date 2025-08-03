@@ -11,7 +11,6 @@ import {
   Button,
   HStack,
   Icon,
-  useColorModeValue,
   FormControl,
   FormLabel,
   Input,
@@ -21,8 +20,8 @@ import {
 import { FaYoutube, FaWhatsapp, FaEnvelope, FaPhone, FaMapMarkerAlt, FaFacebook, FaTwitter, FaInstagram } from 'react-icons/fa';
 
 const Contact: React.FC = () => {
-  const bgColor = useColorModeValue('gray.50', 'gray.900');
-  const cardBg = useColorModeValue('white', 'gray.800');
+  const bgColor = 'gray.50';
+  const cardBg = 'white';
   const toast = useToast();
 
   const contactInfo = [
@@ -113,7 +112,7 @@ const Contact: React.FC = () => {
               <Card key={index} bg={cardBg} shadow="md">
                 <CardBody>
                   <VStack spacing={4} textAlign="center">
-                    <Icon as={info.icon} boxSize={8} color="brand.500" />
+                    <Icon as={info.icon as any} boxSize={8} color="brand.500" />
                     <Heading size="md">{info.title}</Heading>
                     {info.link ? (
                       <Button
@@ -193,7 +192,7 @@ const Contact: React.FC = () => {
                     href={social.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    leftIcon={<Icon as={social.icon} />}
+                    leftIcon={<Icon as={social.icon as any} />}
                     variant="outline"
                     size="lg"
                     justifyContent="flex-start"
@@ -222,7 +221,7 @@ const Contact: React.FC = () => {
                         href="https://youtube.com/@galactiturf"
                         target="_blank"
                         rel="noopener noreferrer"
-                        leftIcon={<FaYoutube />}
+                        leftIcon={<Icon as={FaYoutube as any} />}
                         colorScheme="red"
                       >
                         YouTube
@@ -232,7 +231,7 @@ const Contact: React.FC = () => {
                         href="https://wa.me/234XXXXXXXXX"
                         target="_blank"
                         rel="noopener noreferrer"
-                        leftIcon={<FaWhatsapp />}
+                        leftIcon={<Icon as={FaWhatsapp as any} />}
                         colorScheme="green"
                       >
                         WhatsApp

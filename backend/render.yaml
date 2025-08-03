@@ -4,7 +4,7 @@ services:
     env: python
     plan: free
     buildCommand: pip install -r requirements.txt
-    startCommand: gunicorn galactiturf.wsgi:application
+               startCommand: gunicorn galactiturf.wsgi:application --settings=galactiturf.settings_production
     envVars:
       - key: PYTHON_VERSION
         value: 3.13.3

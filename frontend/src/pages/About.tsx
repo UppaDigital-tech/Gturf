@@ -12,33 +12,32 @@ import {
   Button,
   HStack,
   Icon,
-  useColorModeValue,
 } from '@chakra-ui/react';
 import { Link as RouterLink } from 'react-router-dom';
 import { FaYoutube, FaWhatsapp, FaUsers, FaTrophy, FaHeart, FaShieldAlt } from 'react-icons/fa';
 
 const About: React.FC = () => {
-  const bgColor = useColorModeValue('gray.50', 'gray.900');
-  const cardBg = useColorModeValue('white', 'gray.800');
+  const bgColor = 'gray.50';
+  const cardBg = 'white';
 
   const values = [
     {
-      icon: FaUsers,
+      icon: FaUsers as any,
       title: 'Community First',
       description: 'Building a strong football community where players connect, compete, and grow together.',
     },
     {
-      icon: FaTrophy,
+      icon: FaTrophy as any,
       title: 'Excellence',
       description: 'Striving for excellence in every game, every booking, and every interaction.',
     },
     {
-      icon: FaHeart,
+      icon: FaHeart as any,
       title: 'Passion',
       description: 'Fueled by our passion for football and commitment to making the sport accessible to everyone.',
     },
     {
-      icon: FaShieldAlt,
+      icon: FaShieldAlt as any,
       title: 'Trust & Security',
       description: 'Ensuring secure payments and reliable booking systems for peace of mind.',
     },
@@ -168,7 +167,6 @@ const About: React.FC = () => {
                 href="https://youtube.com/@galactiturf"
                 target="_blank"
                 rel="noopener noreferrer"
-                leftIcon={<FaYoutube />}
                 colorScheme="red"
                 size="lg"
               >
@@ -179,7 +177,6 @@ const About: React.FC = () => {
                 href="https://wa.me/234XXXXXXXXX"
                 target="_blank"
                 rel="noopener noreferrer"
-                leftIcon={<FaWhatsapp />}
                 colorScheme="green"
                 size="lg"
               >

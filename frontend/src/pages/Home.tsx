@@ -7,7 +7,6 @@ import {
   Heading,
   Button,
   SimpleGrid,
-  useColorModeValue,
   VStack,
   Flex,
   Card,
@@ -47,7 +46,7 @@ const Home: React.FC = () => {
   return (
     <Box>
       {/* Hero Section */}
-      <Box bg={useColorModeValue('gray.50', 'gray.900')}>
+      <Box bg="gray.50">
         <Container maxW={'7xl'} py={{ base: 10, sm: 20, lg: 32 }}>
           <Stack spacing={{ base: 8, md: 10 }} align={'center'} direction={'column'}>
             <Stack spacing={6} textAlign={'center'} maxW={'4xl'}>
@@ -160,25 +159,24 @@ const Home: React.FC = () => {
               <Card>
                 <CardBody>
                   <VStack spacing={6} textAlign="center">
-                    <Icon as={FaYoutube} boxSize={12} color="red.500" />
-                    <VStack spacing={4}>
-                      <Heading size="md">YouTube Channel</Heading>
-                      <Text color="gray.600">
-                        Watch game highlights, tutorials, and behind-the-scenes content. 
-                        Subscribe to stay updated with the latest from Galactiturf.
-                      </Text>
-                      <Button
-                        as="a"
-                        href="https://youtube.com/@galactiturf"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        leftIcon={<FaYoutube />}
-                        colorScheme="red"
-                        size="lg"
-                      >
-                        Subscribe to Channel
-                      </Button>
-                    </VStack>
+                    <Icon as={FaYoutube as any} boxSize={12} color="red.500" />
+                                         <VStack spacing={4}>
+                       <Heading size="md">YouTube Channel</Heading>
+                       <Text color="gray.600">
+                         Watch game highlights, tutorials, and behind-the-scenes content. 
+                         Subscribe to stay updated with the latest from Galactiturf.
+                       </Text>
+                       <Button
+                         as="a"
+                         href="https://youtube.com/@galactiturf"
+                         target="_blank"
+                         rel="noopener noreferrer"
+                         colorScheme="red"
+                         size="lg"
+                       >
+                         Subscribe to Channel
+                       </Button>
+                     </VStack>
                   </VStack>
                 </CardBody>
               </Card>
@@ -186,24 +184,23 @@ const Home: React.FC = () => {
               <Card>
                 <CardBody>
                   <VStack spacing={6} textAlign="center">
-                    <Icon as={FaWhatsapp} boxSize={12} color="green.500" />
+                    <Icon as={FaWhatsapp as any} boxSize={12} color="green.500" />
                     <VStack spacing={4}>
                       <Heading size="md">WhatsApp Community</Heading>
                       <Text color="gray.600">
                         Join our WhatsApp community to get instant updates, 
                         find players for games, and connect with the community.
                       </Text>
-                      <Button
-                        as="a"
-                        href="https://wa.me/234XXXXXXXXX"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        leftIcon={<FaWhatsapp />}
-                        colorScheme="green"
-                        size="lg"
-                      >
-                        Join Community
-                      </Button>
+                                             <Button
+                         as="a"
+                         href="https://wa.me/234XXXXXXXXX"
+                         target="_blank"
+                         rel="noopener noreferrer"
+                         colorScheme="green"
+                         size="lg"
+                       >
+                         Join Community
+                       </Button>
                     </VStack>
                   </VStack>
                 </CardBody>
@@ -214,7 +211,7 @@ const Home: React.FC = () => {
       </Box>
 
       {/* CTA Section */}
-      <Box bg={useColorModeValue('gray.50', 'gray.900')} py={20}>
+      <Box bg="gray.50" py={20}>
         <Container maxW={'7xl'}>
           <Stack
             direction={{ base: 'column', md: 'row' }}

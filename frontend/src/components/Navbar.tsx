@@ -6,7 +6,6 @@ import {
   Button,
   useDisclosure,
   Stack,
-  useColorModeValue,
   useBreakpointValue,
   Container,
   Avatar,
@@ -33,14 +32,14 @@ const Navbar: React.FC = () => {
   return (
     <Box>
       <Flex
-        bg={useColorModeValue('white', 'gray.800')}
-        color={useColorModeValue('gray.600', 'white')}
+        bg="white"
+        color="gray.600"
         minH={'60px'}
         py={{ base: 2 }}
         px={{ base: 4 }}
         borderBottom={1}
         borderStyle={'solid'}
-        borderColor={useColorModeValue('gray.200', 'gray.900')}
+        borderColor="gray.200"
         align={'center'}
       >
         <Container maxW="container.xl">
@@ -64,7 +63,7 @@ const Navbar: React.FC = () => {
             <Text
               textAlign={useBreakpointValue({ base: 'center', md: 'left' })}
               fontFamily={'heading'}
-              color={useColorModeValue('gray.800', 'white')}
+              color="gray.800"
               fontSize="xl"
               fontWeight="bold"
               as={RouterLink}
@@ -83,7 +82,7 @@ const Navbar: React.FC = () => {
                   rounded={'md'}
                   _hover={{
                     textDecoration: 'none',
-                    bg: useColorModeValue('gray.200', 'gray.700'),
+                    bg: 'gray.200',
                   }}
                 >
                   Games
@@ -96,7 +95,7 @@ const Navbar: React.FC = () => {
                   rounded={'md'}
                   _hover={{
                     textDecoration: 'none',
-                    bg: useColorModeValue('gray.200', 'gray.700'),
+                    bg: 'gray.200',
                   }}
                 >
                   Subscriptions
@@ -109,7 +108,7 @@ const Navbar: React.FC = () => {
                   rounded={'md'}
                   _hover={{
                     textDecoration: 'none',
-                    bg: useColorModeValue('gray.200', 'gray.700'),
+                    bg: 'gray.200',
                   }}
                 >
                   About
@@ -122,7 +121,7 @@ const Navbar: React.FC = () => {
                   rounded={'md'}
                   _hover={{
                     textDecoration: 'none',
-                    bg: useColorModeValue('gray.200', 'gray.700'),
+                    bg: 'gray.200',
                   }}
                 >
                   Contact
@@ -201,7 +200,7 @@ const Navbar: React.FC = () => {
       {/* Mobile menu */}
       <Box display={{ base: isOpen ? 'block' : 'none', md: 'none' }}>
         <Stack
-          bg={useColorModeValue('white', 'gray.800')}
+          bg="white"
           p={4}
           display={{ md: 'none' }}
         >
@@ -213,7 +212,7 @@ const Navbar: React.FC = () => {
             rounded={'md'}
             _hover={{
               textDecoration: 'none',
-              bg: useColorModeValue('gray.200', 'gray.700'),
+              bg: 'gray.200',
             }}
           >
             Games
@@ -226,7 +225,7 @@ const Navbar: React.FC = () => {
             rounded={'md'}
             _hover={{
               textDecoration: 'none',
-              bg: useColorModeValue('gray.200', 'gray.700'),
+              bg: 'gray.200',
             }}
           >
             Subscriptions
