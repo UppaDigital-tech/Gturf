@@ -38,6 +38,7 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
+    'galactiturf.middleware.SSLMiddleware',  # Custom SSL middleware
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -164,9 +165,19 @@ SECURE_CONTENT_TYPE_NOSNIFF = True
 SECURE_HSTS_SECONDS = 31536000  # 1 year
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 SECURE_HSTS_PRELOAD = True
-SECURE_SSL_REDIRECT = True
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = True
+
+# SSL Settings for Render deployment
+# Check if we're behind a secure proxy (Render sets this header)
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+# Only enable SSL redirect if we're actually behind HTTPS
+# This prevents redirect loops on Render's free tier
+SECURE_SSL_REDIRECT = False  # Disabled to prevent redirect loops
+
+# Cookie security - only set secure=True if we're actually using HTTPS
+# We'll check the X-Forwarded-Proto header to determine this
+SESSION_COOKIE_SECURE = False  # Will be set dynamically based on request
+CSRF_COOKIE_SECURE = False     # Will be set dynamically based on request
 X_FRAME_OPTIONS = 'DENY'
 
 # Logging

@@ -5,8 +5,8 @@ services:
     plan: free
     rootDir: backend/
     buildCommand: pip install -r requirements.txt
-    startCommand: gunicorn galactiturf.wsgi:application
-    releaseCommand: python manage.py createsuperuser --noinput --username admin --email admin@gturf.com --password TurfAdmin
+    startCommand: gunicorn galactiturf.wsgi:application --bind 0.0.0.0:$PORT --workers 2 --timeout 120
+    releaseCommand: python manage.py migrate && python manage.py collectstatic --noinput
     envVars:
       - key: PYTHON_VERSION
         value: 3.11.9
@@ -24,3 +24,9 @@ services:
         sync: false
       - key: DATABASE_URL
         value: postgresql://postgres.kdzakhdgdbhxijxugywa:HnQ6v5ozHuyTY5WQ@aws-0-eu-west-2.pooler.supabase.com:5432/postgres
+      - key: FRONTEND_URL
+        value: https://galactiturf.vercel.app
+      - key: SECURE_SSL_REDIRECT
+        value: false
+      - key: SECURE_PROXY_SSL_HEADER
+        value: HTTP_X_FORWARDED_PROTO,https
